@@ -1,0 +1,57 @@
+MPASM 5.77                          MAIN.ASM   1-24-2025  11:07:00         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 GPR_VAR        UDATA
+000000                00002 somme           RES        1     ; Variable pour stocker la somme
+000001                00003 i         RES        1     ; Compteur pour la boucle
+                      00004 
+                      00005 ;*******************************************************************************
+                      00006 ; Vecteur de Reset
+                      00007 ;*******************************************************************************
+                      00008 RES_VECT  CODE    0x0000            ; Vecteur de reset du processeur
+000000 EF?? F???      00009     GOTO DEBUT                   ; Aller au début du programme
+                      00010 
+                      00011 MAIN_PROG CODE                      ; Début du programme principal
+                      00012 
+000000                00013 DEBUT 
+000000 6A??           00014     CLRF somme                     ; Initialiser "somme" à 0
+000002 0E14           00015     MOVLW d'20'                    ; Charger la valeur 20 dans WREG
+000004 6E??           00016     MOVWF i                        ; Stocker WREG dans "i"
+000006                00017 boucleAddition
+000006 5000           00018     MOVF i, 0                      ; Charger la valeur de "i" dans WREG
+000008 62??           00019     CPFSEQ somme                   ; Comparer "i" avec "somme"
+00000A EF?? F???      00020     GOTO addition                  ; Si différent, aller à "addition"
+00000E EF?? F???      00021     GOTO fin                       ; Sinon, aller à "fin"
+000012                00022 addition
+000012 2600           00023     ADDWF somme, 1                 ; Ajouter "i" à "somme" (mode indirect)
+000014 0600           00024     DECF i, 1                      ; Décrémenter "i"
+000016 EF?? F???      00025     GOTO boucleAddition            ; Retour à la boucle
+00001A                00026 fin
+00001A EF?? F???      00027     GOTO $                         ; Boucle infinie pour arrêter le programme
+                      00028 
+                      00029     END
+MPASM 5.77                          MAIN.ASM   1-24-2025  11:07:00         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+DEBUT                             00000000
+_MAIN_PROG_001A                   0000001A
+__18F45K20                        00000001
+__DEBUG                           
+__MPLAB_DEBUGGER_SIMULATOR        1
+addition                          00000012
+boucleAddition                    00000006
+fin                               0000001A
+i                                 00000001
+somme                             00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+
